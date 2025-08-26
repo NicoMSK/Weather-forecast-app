@@ -1,0 +1,94 @@
+@use "../common/fonts.scss" as *;
+@use "../common/variables.scss" as *;
+
+.hero__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__search {
+  margin: 0;
+  margin-bottom: 3.125rem;
+  max-width: 44.6875rem;
+  width: 100%;
+}
+
+.hero__input {
+  padding: 0.625rem 3.75rem 0.625rem 3.75rem;
+  width: 100%;
+  font-family: $main-font;
+  font-size: 1.5625rem;
+  font-weight: 300;
+  color: #524e4e;
+  border-radius: 25px;
+  background: #d9d9d9;
+  outline: none;
+}
+
+.hero__weather-wrapper {
+  padding: 2.1875rem 1.75rem 0.625rem;
+  width: 100%;
+  max-width: 50.9375rem;
+  border-radius: 32px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25),
+    0 4px 4px 0 rgba(255, 250, 250, 0.25), 0 4px 4px 0 rgba(253, 245, 245, 0.25);
+  background: linear-gradient(147deg, #ad36cb 26.56%, #333 68.75%);
+}
+
+.hero__box {
+  margin-bottom: 3.125rem;
+  display: flex;
+}
+
+.hero__location-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero__location {
+  margin: 0;
+  font-size: 1.875rem;
+  font-weight: 300;
+}
+
+.hero__date {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+.hero__temperature-box {
+  margin-inline: max(15px, (100% - 480px) / 2);
+  display: flex;
+  gap: 0.625rem;
+}
+
+.hero__temperature {
+  font-size: 4.375rem;
+}
+
+.hero__list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.hero__item {
+  text-align: center;
+}
+
+.hero__weather-data {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.hero__weather-parameter {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 500;
+}
