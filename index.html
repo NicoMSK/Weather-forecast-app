@@ -102,42 +102,93 @@
       <ul class="footer__list">
         <li class="footer__item">
           <p class="footer__time">19:00</p>
-          <img src="#" alt="Дождевая туча">
+          <img class="footer__img" src="./src/icons/rain.svg" alt="Дождевая туча">
           <p class="footer__temperature">29 ℃</p>
         </li>
         <li class="footer__item">
           <p class="footer__time">21:00</p>
-          <img src="#" alt="Облака">
+          <img class="footer__img" src="./src/icons/clouds.svg" alt="Облака">
           <p class="footer__temperature">27 &deg;C</p>
         </li>
         <li class="footer__item">
           <p class="footer__time">23:00</p>
-          <img src="#" alt="Грозовая туча">
+          <img class="footer__img" src="./src/icons/cloud-lightning.svg" alt="Грозовая туча">
           <p class="footer__temperature"> 25 &deg;C</p>
         </li>
         <li class="footer__item">
           <p class="footer__time">01:00</p>
-          <img src="#" alt="Грозовая туча с дождём">
+          <img class="footer__img" src="./src/icons/cloud-lightning-rain.svg" alt="Грозовая туча с дождём">
           <p class="footer__temperature"> 25 &deg;C</p>
         </li>
         <li class="footer__item">
           <p class="footer__time">03:00</p>
-          <img src="#" alt="Грозовая туча с дождём">
+          <img class="footer__img" src="./src/icons/cloud-lightning-rain.svg" alt="Грозовая туча с дождём">
           <p class="footer__temperature">27 &deg;C</p>
         </li>
         <li class="footer__item">
           <p class="footer__time">05:00</p>
-          <img src="#" alt="Облака с солнцем">
+          <img class="footer__img" src="./src/icons/sun-clouds.svg" alt="Облака с солнцем">
           <p class="footer__temperature">22 &deg;C</p>
         </li>
         <li class="footer__item">
           <p class="footer__time">07:00</p>
-          <img src="#" alt="Снеговая туча">
+          <img class="footer__img" src="./src/icons/snow.svg" alt="Снеговая туча">
           <p class="footer__temperature">23 &deg;C</p>
         </li>
       </ul>
     </div>
   </footer>
+  <template class="hero__template">
+    <div class="hero__weather-wrapper">
+      <div class="hero__box">
+        <div class="hero__location-box">
+          <p class="hero__location"></p>
+          <p class="hero__date"></p>
+        </div>
+        <div class="hero__temperature-box">
+          <p class="hero__temperature"></p>
+          <img src="" alt="">
+        </div>
+      </div>
+      <ul class="hero__list">
+        <li class="hero__item">
+          <p class="hero__weather-data"></p>
+          <p class="hero__weather-parameter">
+            <span class="hero__humidity"></span>
+            %
+          </p>
+        </li>
+        <li class="hero__item">
+          <p class="hero__weather-data"></p>
+          <p class="hero__weather-parameter">
+            <span class="hero__mileage"></span>
+            км
+          </p>
+        </li>
+        <li class="hero__item">
+          <p class="hero__weather-data"></p>
+          <p class="hero__weather-parameter">
+            <span class="hero__pressure"></span>
+            мм рт. ст.
+          </p>
+        </li>
+        <li class="hero__item">
+          <p class="hero__weather-data"></p>
+          <p class="hero__weather-parameter">
+            <span class="hero__speed"></span>
+            м/с
+          </p>
+        </li>
+      </ul>
+    </div>
+  </template>
+  <template class="footer__template">
+    <li class="footer__item">
+      <p class="footer__time"></p>
+      <img class="footer__img" src="" alt="">
+      <p class="footer__temperature"> &deg;C</p>
+    </li>
+  </template>
   <script type="module" src="/src/main.ts"></script>
 </body>
 

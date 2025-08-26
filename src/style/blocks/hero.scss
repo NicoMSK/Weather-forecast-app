@@ -2,6 +2,7 @@
 @use "../common/variables.scss" as *;
 
 .hero__container {
+  margin-bottom: 4.375rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,8 +15,23 @@
   width: 100%;
 }
 
+.hero__form {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    left: 18px;
+    top: 5px;
+    background-image: url("../../icons/search_.svg");
+    background-repeat: no-repeat;
+  }
+}
+
 .hero__input {
-  padding: 0.625rem 3.75rem 0.625rem 3.75rem;
+  padding: 0.625rem 3.75rem 0.625rem 4.375rem;
   width: 100%;
   font-family: $main-font;
   font-size: 1.5625rem;
@@ -51,6 +67,17 @@
   margin: 0;
   font-size: 1.875rem;
   font-weight: 300;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    right: -30px;
+    background-image: url("../../icons/location.svg");
+    background-repeat: no-repeat;
+  }
 }
 
 .hero__date {
@@ -67,12 +94,26 @@
 }
 
 .hero__temperature {
+  margin: 80px 0;
   font-size: 4.375rem;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 19px;
+    height: 63px;
+    left: -30px;
+    top: -15px;
+    background-image: url("../../icons/termometr.svg");
+  }
 }
 
 .hero__list {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 0.625rem;
 }
 
 .hero__item {
