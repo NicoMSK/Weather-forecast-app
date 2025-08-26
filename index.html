@@ -12,18 +12,35 @@
   <header class="header">
     <div class="container">
       <nav class="header__nav">
-        <h1 class="header__title">Погода</h1>
-        <p class="header__time">21:00</p>
+        <div class="header__logo-box">
+          <h1 class="header__title">Погода</h1>
+          <p class="header__time">21:00</p>
+        </div>
         <ul class="header__list">
-          <li class="header__item">Сегодня</li>
-          <li class="header__item">Завтра</li>
-          <li class="header__item">Ежемесячный прогноз</li>
+          <li class="header__item header__item--current">
+            <button class="header__button header__button--current header__button--today" type="button">
+              Сегодня
+            </button>
+          </li>
+          <li class="header__item">
+            <button class="header__button header__button--tommorow" type="button">
+              Завтра
+            </button>
+          </li>
+          <li class="header__item">
+            <button class="header__button header__button--month" type="button">
+              Ежемесячный
+              прогноз
+            </button>
+          </li>
         </ul>
-        <button class="header__toggle" type="button">
-          <p class="header__temperature">℃</p>
-          <p class="header__temperature">℉</p>
-          <span class="visually-hidden">Сменить тему</span>
-        </button>
+        <div class="header__toggle-wrapper">
+          <p class="header__temperature header__temperature--celsius">℃</p>
+          <button class="header__toggle" type="button">
+            <span class="visually-hidden">Сменить тему</span>
+          </button>
+          <p class="header__temperature header__temperature--faringate">℉</p>
+        </div>
       </nav>
     </div>
   </header>

@@ -6,7 +6,7 @@ $main-font: "Poppins", "Arial", sans-serif;
   "Poppins",
   300,
   normal,
-  url("../../fonts/Poppins-Light.woff2") format("woff2")
+  url("/vite-weather/src/fonts/Poppins-Light.woff2") format("woff2")
 );
 
 @include font-face(

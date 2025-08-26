@@ -8,29 +8,20 @@
   }
 }
 
-@mixin link-basic {
-  display: block;
-  font-family: $main-font;
-  font-size: 1rem;
-  line-height: 125%;
-  color: $black;
-  text-decoration: none;
-}
-
-@mixin title-basic {
+@mixin title-basic($font-family, $color) {
   margin: 0;
   padding: 0;
-  font-family: $main-font;
-  font-weight: 800;
-  font-size: 2rem;
-  line-height: 120%;
-  color: $black;
+  font-family: $font-family;
+  font-size: 3.4375rem;
+  font-weight: 400;
+  color: $color;
 }
 
-@mixin button-reset {
+@mixin button-reset($color) {
   border: none;
   padding: 0;
   background-color: transparent;
+  color: $color;
   cursor: pointer;
 }
 
