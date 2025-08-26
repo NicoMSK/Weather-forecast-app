@@ -1,0 +1,46 @@
+@mixin font-face($font-family, $font-weight, $font-style, $font-src) {
+  @font-face {
+    font-family: $font-family;
+    font-weight: $font-weight;
+    font-style: $font-style;
+    src: $font-src;
+    font-display: swap;
+  }
+}
+
+@mixin link-basic {
+  display: block;
+  font-family: $main-font;
+  font-size: 1rem;
+  line-height: 125%;
+  color: $black;
+  text-decoration: none;
+}
+
+@mixin title-basic {
+  margin: 0;
+  padding: 0;
+  font-family: $main-font;
+  font-weight: 800;
+  font-size: 2rem;
+  line-height: 120%;
+  color: $black;
+}
+
+@mixin button-reset {
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
