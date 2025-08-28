@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ru">
+<html class="page" lang="ru">
 
 <head>
   <meta charset="UTF-8" />
@@ -8,15 +8,187 @@
   <title>Прогноз погоды</title>
 </head>
 
-<body>
-  <div id="app">
-    <svg width="32" height="32">
-      <use href="src/icons/vite.svg"></use>
-    </svg>
-
-
-
-  </div>
+<body class="page__body">
+  <header class="header">
+    <div class="container">
+      <nav class="header__nav">
+        <div class="header__logo-box">
+          <h1 class="header__title">Погода</h1>
+          <p class="header__time">21:00</p>
+        </div>
+        <ul class="header__list">
+          <li class="header__item header__item--current">
+            <button class="header__button header__button--current header__button--today" type="button">
+              Сегодня
+            </button>
+          </li>
+          <li class="header__item">
+            <button class="header__button header__button--tommorow" type="button">
+              Завтра
+            </button>
+          </li>
+          <li class="header__item">
+            <button class="header__button header__button--month" type="button">
+              Ежемесячный
+              прогноз
+            </button>
+          </li>
+        </ul>
+        <div class="header__toggle-wrapper">
+          <p class="header__temperature header__temperature--celsius">℃</p>
+          <button class="header__toggle" type="button">
+            <span class="visually-hidden">Сменить тему</span>
+          </button>
+          <p class="header__temperature header__temperature--faringate">℉</p>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main class="page__main">
+    <section class="hero">
+      <div class="hero__container container">
+        <search class="hero__search">
+          <form class="hero__form" action="#" method="get">
+            <input class="hero__input" type="search" placeholder="Поиск локации...">
+          </form>
+        </search>
+        <div class="hero__weather-wrapper">
+          <div class="hero__box">
+            <div class="hero__location-box">
+              <p class="hero__location">Москва</p>
+              <p class="hero__date">Авг 25, Пон</p>
+            </div>
+            <div class="hero__temperature-box">
+              <p class="hero__temperature">27℃</p>
+              <img src="./src/icons/clouds.svg" alt="Изображение облаков">
+            </div>
+          </div>
+          <ul class="hero__list">
+            <li class="hero__item">
+              <p class="hero__weather-data">Влажность</p>
+              <p class="hero__weather-parameter">
+                <span class="hero__humidity">99</span>
+                %
+              </p>
+            </li>
+            <li class="hero__item">
+              <p class="hero__weather-data">Видимость</p>
+              <p class="hero__weather-parameter">
+                <span class="hero__mileage">8</span>
+                км
+              </p>
+            </li>
+            <li class="hero__item">
+              <p class="hero__weather-data">Атмосферное давление</p>
+              <p class="hero__weather-parameter">
+                <span class="hero__pressure">1005</span>
+                мм рт. ст.
+              </p>
+            </li>
+            <li class="hero__item">
+              <p class="hero__weather-data">Ветер</p>
+              <p class="hero__weather-parameter">
+                <span class="hero__speed">2</span>
+                м/с
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <ul class="footer__list">
+        <li class="footer__item">
+          <p class="footer__time">19:00</p>
+          <img class="footer__img" src="./src/icons/rain.svg" alt="Дождевая туча">
+          <p class="footer__temperature">29 ℃</p>
+        </li>
+        <li class="footer__item">
+          <p class="footer__time">21:00</p>
+          <img class="footer__img" src="./src/icons/clouds.svg" alt="Облака">
+          <p class="footer__temperature">27 &deg;C</p>
+        </li>
+        <li class="footer__item">
+          <p class="footer__time">23:00</p>
+          <img class="footer__img" src="./src/icons/cloud-lightning.svg" alt="Грозовая туча">
+          <p class="footer__temperature"> 25 &deg;C</p>
+        </li>
+        <li class="footer__item">
+          <p class="footer__time">01:00</p>
+          <img class="footer__img" src="./src/icons/cloud-lightning-rain.svg" alt="Грозовая туча с дождём">
+          <p class="footer__temperature"> 25 &deg;C</p>
+        </li>
+        <li class="footer__item">
+          <p class="footer__time">03:00</p>
+          <img class="footer__img" src="./src/icons/cloud-lightning-rain.svg" alt="Грозовая туча с дождём">
+          <p class="footer__temperature">27 &deg;C</p>
+        </li>
+        <li class="footer__item">
+          <p class="footer__time">05:00</p>
+          <img class="footer__img" src="./src/icons/sun-clouds.svg" alt="Облака с солнцем">
+          <p class="footer__temperature">22 &deg;C</p>
+        </li>
+        <li class="footer__item">
+          <p class="footer__time">07:00</p>
+          <img class="footer__img" src="./src/icons/snow.svg" alt="Снеговая туча">
+          <p class="footer__temperature">23 &deg;C</p>
+        </li>
+      </ul>
+    </div>
+  </footer>
+  <template class="hero__template">
+    <div class="hero__weather-wrapper">
+      <div class="hero__box">
+        <div class="hero__location-box">
+          <p class="hero__location"></p>
+          <p class="hero__date"></p>
+        </div>
+        <div class="hero__temperature-box">
+          <p class="hero__temperature"></p>
+          <img src="" alt="">
+        </div>
+      </div>
+      <ul class="hero__list">
+        <li class="hero__item">
+          <p class="hero__weather-data"></p>
+          <p class="hero__weather-parameter">
+            <span class="hero__humidity"></span>
+            %
+          </p>
+        </li>
+        <li class="hero__item">
+          <p class="hero__weather-data"></p>
+          <p class="hero__weather-parameter">
+            <span class="hero__mileage"></span>
+            км
+          </p>
+        </li>
+        <li class="hero__item">
+          <p class="hero__weather-data"></p>
+          <p class="hero__weather-parameter">
+            <span class="hero__pressure"></span>
+            мм рт. ст.
+          </p>
+        </li>
+        <li class="hero__item">
+          <p class="hero__weather-data"></p>
+          <p class="hero__weather-parameter">
+            <span class="hero__speed"></span>
+            м/с
+          </p>
+        </li>
+      </ul>
+    </div>
+  </template>
+  <template class="footer__template">
+    <li class="footer__item">
+      <p class="footer__time"></p>
+      <img class="footer__img" src="" alt="">
+      <p class="footer__temperature"> &deg;C</p>
+    </li>
+  </template>
   <script type="module" src="/src/main.ts"></script>
 </body>
 

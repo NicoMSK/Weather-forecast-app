@@ -1,10 +1,12 @@
-#app {
-  margin: 0 auto;
-  background-color: aquamarine;
-  max-width: 990px;
-}
+/* GLOBAL */
+@use "./style/common/mixin.scss";
+@use "./style/common/fonts.scss";
+@use "./style/common/global.scss";
+@use "./style/common/visually-hidden.scss";
 
-.svgg {
-  background-color: cadetblue;
-  border: 3px solid;
-}
+/* BLOCKS */
+@use "./style/blocks/page.scss";
+@use "./style/blocks/container.scss";
+@use "./style/blocks/header.scss";
+@use "./style/blocks/hero.scss";
+@use "./style/blocks/footer.scss";
