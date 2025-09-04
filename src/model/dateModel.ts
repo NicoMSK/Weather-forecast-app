@@ -1,6 +1,4 @@
-export function dateCurrent() {
-  const date = new Date();
-
+export function dateCurrent(date: Date) {
   const month = new Intl.DateTimeFormat("ru", { month: "short" })
     .format(date)
     .replace(".", "");
