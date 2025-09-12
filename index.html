@@ -29,14 +29,14 @@
           </li>
           <li class="header__item">
             <button class="header__button header__button--month" type="button">
-              Неделя
+              3 дня
             </button>
           </li>
         </ul>
         <div class="header__toggle-wrapper">
           <p class="header__temperature header__temperature--celsius">℃</p>
           <button class="header__toggle" type="button">
-            <span class="visually-hidden">Сменить тему</span>
+            <span class="visually-hidden">Сменить систему измерений температуры</span>
           </button>
           <p class="header__temperature header__temperature--faringate">℉</p>
         </div>
@@ -55,10 +55,10 @@
           <div class="hero__box">
             <div class="hero__location-box">
               <p class="hero__location">Москва</p>
-              <p class="hero__date">Авг 25, Пон</p>
+              <p class="hero__date">--</p>
             </div>
             <div class="hero__temperature-box">
-              <p class="hero__temperature">27℃</p>
+              <p class="hero__temperature">--℃</p>
               <img src="./src/icons/clouds.svg" alt="Изображение облаков">
             </div>
           </div>
@@ -66,28 +66,28 @@
             <li class="hero__item">
               <p class="hero__weather-data">Влажность</p>
               <p class="hero__weather-parameter">
-                <span class="hero__humidity">99</span>
+                <span class="hero__humidity">--</span>
                 %
               </p>
             </li>
             <li class="hero__item">
               <p class="hero__weather-data">Видимость</p>
               <p class="hero__weather-parameter">
-                <span class="hero__mileage">8</span>
+                <span class="hero__mileage">--</span>
                 км
               </p>
             </li>
             <li class="hero__item">
-              <p class="hero__weather-data">Давление</p>
+              <p class="hero__weather-data">Осадки</p>
               <p class="hero__weather-parameter">
-                <span class="hero__pressure">1005</span>
-                мм рт. ст.
+                <span class="hero__pressure">--</span>
+                мм.
               </p>
             </li>
             <li class="hero__item">
               <p class="hero__weather-data">Ветер</p>
               <p class="hero__weather-parameter">
-                <span class="hero__speed">2</span>
+                <span class="hero__speed">--</span>
                 м/с
               </p>
             </li>
@@ -99,7 +99,7 @@
   <footer class="footer">
     <div class="container">
       <ul class="footer__list">
-        <li class="footer__item">
+        <!-- <li class="footer__item">
           <p class="footer__time">19:00</p>
           <img class="footer__img" src="./src/icons/rain.svg" alt="Дождевая туча">
           <p class="footer__temperature">29 ℃</p>
@@ -133,59 +133,16 @@
           <p class="footer__time">07:00</p>
           <img class="footer__img" src="./src/icons/snow.svg" alt="Снеговая туча">
           <p class="footer__temperature">23 &deg;C</p>
-        </li>
+        </li> -->
       </ul>
     </div>
   </footer>
-  <template class="hero__template">
-    <div class="hero__weather-wrapper">
-      <div class="hero__box">
-        <div class="hero__location-box">
-          <p class="hero__location"></p>
-          <p class="hero__date"></p>
-        </div>
-        <div class="hero__temperature-box">
-          <p class="hero__temperature"></p>
-          <img src="" alt="">
-        </div>
-      </div>
-      <ul class="hero__list">
-        <li class="hero__item">
-          <p class="hero__weather-data">Влажность</p>
-          <p class="hero__weather-parameter">
-            <span class="hero__humidity"></span>
-            %
-          </p>
-        </li>
-        <li class="hero__item">
-          <p class="hero__weather-data">Видимость</p>
-          <p class="hero__weather-parameter">
-            <span class="hero__mileage"></span>
-            км
-          </p>
-        </li>
-        <li class="hero__item">
-          <p class="hero__weather-data">Давление</p>
-          <p class="hero__weather-parameter">
-            <span class="hero__pressure"></span>
-            мм рт. ст.
-          </p>
-        </li>
-        <li class="hero__item">
-          <p class="hero__weather-data">Ветер</p>
-          <p class="hero__weather-parameter">
-            <span class="hero__speed"></span>
-            м/с
-          </p>
-        </li>
-      </ul>
-    </div>
-  </template>
+
   <template class="footer__template">
     <li class="footer__item">
       <p class="footer__time"></p>
       <img class="footer__img" src="" alt="">
-      <p class="footer__temperature"> &deg;C</p>
+      <p class="footer__temperature">&deg;C</p>
     </li>
   </template>
   <script type="module" src="/src/main.ts"></script>
