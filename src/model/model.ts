@@ -1,6 +1,8 @@
 import * as weatherApi from "@/model/api/weather.api.ts";
 import * as weatherType from "@/model/api/type.api";
 
+export type WeatherDateType = "today" | "tommorow" | "threeDay";
+
 export class WeatherModel {
   location: string;
   currentOrFuture: string;
@@ -35,7 +37,7 @@ export class WeatherModel {
       case "today":
         hourseSort = weatherData.forecast.forecastday[0].hour;
         break;
-      case "tomorrow":
+      case "tommorow":
         hourseSort = weatherData.forecast.forecastday[1].hour;
         break;
     }
@@ -57,7 +59,7 @@ export class WeatherModel {
 
     return dataRenderDays;
   }
-  // ниже функция которая отвечает за ренедер на 3 дня
+
   dataWeekForFooterRender(weatherData: weatherType.ForecastDayWeather) {
     let date = null;
     let imgUrl = null;
@@ -66,6 +68,15 @@ export class WeatherModel {
     let dataRenderWeek = [];
     const daysSort = weatherData.forecast.forecastday;
 
-    console.log({ daysSort });
+    for (let i = 0; i < daysSort.length; i++) {
+      date = daysSort[i].date.split("-").reverse().join("-");
+      imgUrl = daysSort[i].day.condition.icon;
+      imgText = daysSort[i].day.condition.text;
+      temperature = Math.round(daysSort[i].day.avgtemp_c);
+
+      dataRenderWeek.push({ date, imgUrl, imgText, temperature });
+    }
+
+    return dataRenderWeek;
   }
 }

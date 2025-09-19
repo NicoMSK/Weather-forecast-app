@@ -1,13 +1,45 @@
 import * as weatherType from "@/model/api/type.api";
+import * as weatherTypeMode from "@/model/model";
 
 const heroContainer = document.querySelector(".hero__weather-wrapper");
+export const headerListItems = document.querySelectorAll(".header__item");
+export const headerList = document.querySelector(".header");
+export const todayButton = document.querySelector(".header__button--today");
+export const tommorowButton = document.querySelector(
+  ".header__button--tommorow"
+);
+export const threeDaysButton = document.querySelector(
+  ".header__button--three-days"
+);
+
+export function updateControlButtons(
+  curDateMode: weatherTypeMode.WeatherDateType
+) {
+  const headerListItemsArray = [...headerListItems];
+
+  headerListItemsArray.forEach((item) =>
+    item.classList.remove("header__item--current")
+  );
+
+  const targetButton = headerListItemsArray.find(
+    (item) => (item as HTMLElement).dataset.mode === curDateMode
+  );
+
+  if (!targetButton) {
+    console.warn(`Кнопка с data-mode="${curDateMode}" не найдена`);
+    return;
+  } else {
+    targetButton.classList.add("header__item--current");
+  }
+}
 
 if (!(heroContainer instanceof HTMLElement)) {
   throw new Error("hero-Container не найден");
 }
 
 type WeatherIndicatorsByTime = {
-  time: string;
+  time?: string;
+  date?: string;
   imgUrl: string;
   imgText: string;
   temperature: number;
@@ -64,7 +96,9 @@ export class MainWeather {
         <li class="hero__item">
           <p class="hero__weather-data">Осадки</p>
           <p class="hero__weather-parameter">
-            <span class="hero__pressure">${weatherData.current.precip_mm}</span>
+            <span class="hero__pressure">${Math.ceil(
+              weatherData.current.precip_mm
+            )}</span>
             мм.
           </p>
         </li>
@@ -89,10 +123,20 @@ export class MainWeather {
       10
     );
 
-    this.renderFooter([]);
+    this.renderFooter([], "", "");
   }
 
-  renderFooter(footerItems: WeatherIndicatorsByTime[]) {
+  renderFooter(
+    footerItems: WeatherIndicatorsByTime[],
+    period: "time" | "date",
+    unitMeasurement: "℃" | "℉"
+  ) {
+    if (!(this.weatherClockList instanceof HTMLElement)) {
+      throw new Error("weatherClockList не найден");
+    }
+
+    this.weatherClockList.innerHTML = "";
+
     for (let i = 0; i < footerItems.length; i++) {
       const footerClockItem = this.itemTemplate?.cloneNode(true) as HTMLElement;
       const timeFooter = footerClockItem.querySelector(".footer__time")!;
@@ -102,14 +146,12 @@ export class MainWeather {
         ".footer__temperature"
       )!;
 
-      timeFooter.textContent = String(footerItems[i].time);
+      timeFooter.textContent = String(footerItems[i][period]);
       imgUrlFooter.src = footerItems[i].imgUrl;
       imgUrlFooter.alt = footerItems[i].imgText;
-      temperatureFooter.textContent = String(footerItems[i].temperature);
+      temperatureFooter.textContent =
+        String(footerItems[i].temperature) + unitMeasurement;
 
-      if (!(this.weatherClockList instanceof HTMLElement)) {
-        throw new Error("weatherClockList не найден");
-      }
       this.weatherClockList.appendChild(footerClockItem);
     }
   }

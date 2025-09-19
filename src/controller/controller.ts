@@ -1,33 +1,65 @@
 import * as date from "@/model/dateModel.ts";
 import { WeatherModel } from "@/model/model";
+import type { WeatherDateType } from "@/model/model";
 import * as renderView from "@/view/view";
 import * as temperatureToggle from "@/view/temperatureSwitching.view";
 
-const weatherModel = new WeatherModel("Moscow", "current", 0);
-const weatherModelOneDay = new WeatherModel("Moscow", "forecast", 3);
 const dateCurrent = date.dateCurrent(new Date());
-const renderApi = weatherModel.getWeather();
-const renderApiOneDay = weatherModelOneDay.getWeather();
 const celsiusFahrenheitSwitch = temperatureToggle.temperatureSwitching();
-const renderFooterOneDay = weatherModelOneDay.dataForFooterRender(
-  await renderApiOneDay,
-  "today"
-);
+let currentDateMode: WeatherDateType = "today";
+const weatherModel = new WeatherModel("Moscow", "forecast", 1);
 
-const renderApiWeek = weatherModelOneDay.dataWeekForFooterRender(
-  await renderApiOneDay
-);
+async function startRenderWeather() {
+  const renderApiToday = weatherModel.getWeather();
+  const renderFooterToday = weatherModel.dataForFooterRender(
+    await renderApiToday,
+    currentDateMode
+  );
 
-renderView.mainWeather.renderWeather(
-  await renderApi,
-  dateCurrent,
-  celsiusFahrenheitSwitch,
-  "&deg;C"
-);
+  renderView.mainWeather.renderWeather(
+    await renderApiToday,
+    dateCurrent,
+    celsiusFahrenheitSwitch,
+    "&deg;C"
+  );
 
-renderView.mainWeather.renderFooter(await renderFooterOneDay);
+  renderView.mainWeather.renderFooter(await renderFooterToday, "time", "℃");
+}
 
-renderView.mainWeather.renderFooter(await renderApiWeek); /// вызов на 3 дня
+startRenderWeather();
+
+renderView.todayButton?.addEventListener("click", async () => {
+  startRenderWeather();
+
+  currentDateMode = "today";
+  renderView.updateControlButtons(currentDateMode);
+});
+
+renderView.tommorowButton?.addEventListener("click", async () => {
+  const weatherModelTomorrow = new WeatherModel("Moscow", "forecast", 2);
+  const renderApiTomorrow = weatherModelTomorrow.getWeather();
+  const renderFooterTomorrow = weatherModelTomorrow.dataForFooterRender(
+    await renderApiTomorrow,
+    (currentDateMode = "tommorow")
+  );
+
+  renderView.mainWeather.renderFooter(await renderFooterTomorrow, "time", "℃");
+
+  renderView.updateControlButtons(currentDateMode);
+});
+
+renderView.threeDaysButton?.addEventListener("click", async () => {
+  const weatherModelThreeDays = new WeatherModel("Moscow", "forecast", 3);
+  const renderApiThreeDays = weatherModelThreeDays.getWeather();
+  const renderFooterThreeDays = weatherModelThreeDays.dataWeekForFooterRender(
+    await renderApiThreeDays
+  );
+
+  renderView.mainWeather.renderFooter(await renderFooterThreeDays, "date", "℃");
+
+  currentDateMode = "threeDay";
+  renderView.updateControlButtons(currentDateMode);
+});
 
 temperatureToggle.temperatureToggle?.addEventListener("click", () => {
   temperatureToggle.temperatureToggle?.classList.toggle("header__toggle--on");

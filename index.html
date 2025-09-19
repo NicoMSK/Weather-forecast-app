@@ -17,18 +17,18 @@
           <p class="header__time">21:00</p>
         </div>
         <ul class="header__list">
-          <li class="header__item header__item--current">
+          <li class="header__item header__item--current" data-mode="today">
             <button class="header__button header__button--current header__button--today" type="button">
               Сегодня
             </button>
           </li>
-          <li class="header__item">
+          <li class="header__item" data-mode="tommorow">
             <button class="header__button header__button--tommorow" type="button">
               Завтра
             </button>
           </li>
-          <li class="header__item">
-            <button class="header__button header__button--month" type="button">
+          <li class="header__item" data-mode="threeDay">
+            <button class="header__button header__button--three-days" type="button">
               3 дня
             </button>
           </li>
@@ -99,41 +99,6 @@
   <footer class="footer">
     <div class="container">
       <ul class="footer__list">
-        <!-- <li class="footer__item">
-          <p class="footer__time">19:00</p>
-          <img class="footer__img" src="./src/icons/rain.svg" alt="Дождевая туча">
-          <p class="footer__temperature">29 ℃</p>
-        </li>
-        <li class="footer__item">
-          <p class="footer__time">21:00</p>
-          <img class="footer__img" src="./src/icons/clouds.svg" alt="Облака">
-          <p class="footer__temperature">27 &deg;C</p>
-        </li>
-        <li class="footer__item">
-          <p class="footer__time">23:00</p>
-          <img class="footer__img" src="./src/icons/cloud-lightning.svg" alt="Грозовая туча">
-          <p class="footer__temperature"> 25 &deg;C</p>
-        </li>
-        <li class="footer__item">
-          <p class="footer__time">01:00</p>
-          <img class="footer__img" src="./src/icons/cloud-lightning-rain.svg" alt="Грозовая туча с дождём">
-          <p class="footer__temperature"> 25 &deg;C</p>
-        </li>
-        <li class="footer__item">
-          <p class="footer__time">03:00</p>
-          <img class="footer__img" src="./src/icons/cloud-lightning-rain.svg" alt="Грозовая туча с дождём">
-          <p class="footer__temperature">27 &deg;C</p>
-        </li>
-        <li class="footer__item">
-          <p class="footer__time">05:00</p>
-          <img class="footer__img" src="./src/icons/sun-clouds.svg" alt="Облака с солнцем">
-          <p class="footer__temperature">22 &deg;C</p>
-        </li>
-        <li class="footer__item">
-          <p class="footer__time">07:00</p>
-          <img class="footer__img" src="./src/icons/snow.svg" alt="Снеговая туча">
-          <p class="footer__temperature">23 &deg;C</p>
-        </li> -->
       </ul>
     </div>
   </footer>
