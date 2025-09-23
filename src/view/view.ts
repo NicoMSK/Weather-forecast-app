@@ -1,5 +1,8 @@
-import * as weatherType from "@/model/api/type.api";
+import * as weatherType from "@/model/api/type";
 import * as weatherTypeMode from "@/model/model";
+
+const START_STRING = 16;
+const END_STRING = 10;
 
 const heroContainer = document.querySelector(".hero__weather-wrapper");
 export const headerListItems = document.querySelectorAll(".header__item");
@@ -113,31 +116,31 @@ export class MainWeather {
         </li>
       </ul>`;
 
-    if (!(this.headerTime instanceof HTMLElement)) {
+    if (!this.headerTime) {
       throw new Error("headerTime не найден");
     }
 
     this.parent.innerHTML = heroContent;
     this.headerTime.innerHTML = weatherData.location.localtime.substring(
-      16,
-      10
+      START_STRING,
+      END_STRING
     );
 
-    this.renderFooter([], "", "");
+    this.renderFooter({ footerItems: [], period: "", unitMeasurement: "" });
   }
 
-  renderFooter(
-    footerItems: WeatherIndicatorsByTime[],
-    period: "time" | "date",
-    unitMeasurement: "℃" | "℉"
-  ) {
+  renderFooter(params: {
+    footerItems: WeatherIndicatorsByTime[];
+    period: "time" | "date";
+    unitMeasurement: "℃" | "℉";
+  }) {
     if (!(this.weatherClockList instanceof HTMLElement)) {
       throw new Error("weatherClockList не найден");
     }
 
     this.weatherClockList.innerHTML = "";
 
-    for (let i = 0; i < footerItems.length; i++) {
+    for (let i = 0; i < params.footerItems.length; i++) {
       const footerClockItem = this.itemTemplate?.cloneNode(true) as HTMLElement;
       const timeFooter = footerClockItem.querySelector(".footer__time")!;
       const imgUrlFooter =
@@ -146,11 +149,11 @@ export class MainWeather {
         ".footer__temperature"
       )!;
 
-      timeFooter.textContent = String(footerItems[i][period]);
-      imgUrlFooter.src = footerItems[i].imgUrl;
-      imgUrlFooter.alt = footerItems[i].imgText;
+      timeFooter.textContent = String(params.footerItems[i][params.period]);
+      imgUrlFooter.src = params.footerItems[i].imgUrl;
+      imgUrlFooter.alt = params.footerItems[i].imgText;
       temperatureFooter.textContent =
-        String(footerItems[i].temperature) + unitMeasurement;
+        String(params.footerItems[i].temperature) + params.unitMeasurement;
 
       this.weatherClockList.appendChild(footerClockItem);
     }
