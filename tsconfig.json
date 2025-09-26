@@ -10,6 +10,7 @@
       "@/*": ["src/*"]
     },
     "types": ["vite-plugin-svg-sprite/typings/vanilla"],
+    "resolveJsonModule": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",

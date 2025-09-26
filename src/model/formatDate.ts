@@ -1,4 +1,7 @@
-export function dateCurrent(date: Date) {
+export function formatDate(days: number) {
+  const date = new Date();
+  date.setDate(date.getDate() + days);
+
   const month = new Intl.DateTimeFormat("ru", { month: "short" })
     .format(date)
     .replace(".", "");

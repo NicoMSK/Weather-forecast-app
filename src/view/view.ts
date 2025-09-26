@@ -40,6 +40,18 @@ if (!(heroContainer instanceof HTMLElement)) {
   throw new Error("hero-Container не найден");
 }
 
+type WeatherDataDay = {
+  location: string;
+  localtime: string;
+  temperature: number;
+  img: string;
+  imgText: string;
+  humidity: number;
+  vis: number;
+  precip: number;
+  wind: number;
+};
+
 type WeatherIndicatorsByTime = {
   time?: string;
   date?: string;
@@ -60,57 +72,94 @@ export class MainWeather {
     this.parent = parent;
   }
 
-  renderWeather(
+  getDataForWeatherRender(
     weatherData: weatherType.ForecastDayWeather,
+    period: string
+  ) {
+    switch (period) {
+      case "today":
+        return {
+          location: weatherData.location.name,
+          localtime: weatherData.location.localtime,
+          temperature: weatherData.current.temp_c,
+          img: weatherData.current.condition.icon,
+          imgText: weatherData.current.condition.text,
+          humidity: weatherData.current.humidity,
+          vis: weatherData.current.vis_km,
+          precip: weatherData.current.precip_mm,
+          wind: weatherData.current.wind_kph,
+        };
+      case "tommorow":
+        return {
+          location: weatherData.location.name,
+          localtime: weatherData.location.localtime,
+          temperature: weatherData.forecast.forecastday[0].day.avgtemp_c,
+          img: weatherData.forecast.forecastday[0].day.condition.icon,
+          imgText: weatherData.forecast.forecastday[0].day.condition.text,
+          humidity: weatherData.forecast.forecastday[0].day.avghumidity,
+          vis: weatherData.forecast.forecastday[0].day.avgvis_km,
+          precip: weatherData.forecast.forecastday[0].day.totalprecip_mm,
+          wind: weatherData.forecast.forecastday[0].day.maxwind_kph,
+        };
+      case "threeDay":
+        return {
+          location: weatherData.location.name,
+          localtime: weatherData.location.localtime,
+          temperature: weatherData.forecast.forecastday[2].day.avgtemp_c,
+          img: weatherData.forecast.forecastday[2].day.condition.icon,
+          imgText: weatherData.forecast.forecastday[2].day.condition.text,
+          humidity: weatherData.forecast.forecastday[2].day.avghumidity,
+          vis: weatherData.forecast.forecastday[2].day.avgvis_km,
+          precip: weatherData.forecast.forecastday[2].day.totalprecip_mm,
+          wind: weatherData.forecast.forecastday[2].day.maxwind_kph,
+        };
+    }
+  }
+
+  renderWeather(
+    weatherData: WeatherDataDay,
     dateCurrent: string,
-    temperature: number,
     unitMeasurement: string
   ) {
     const heroContent = `
       <div class="hero__box">
         <div class="hero__location-box">
-          <p class="hero__location">${weatherData.location.name}</p>
+          <p class="hero__location">${weatherData.location}</p>
           <p class="hero__date">${dateCurrent}</p>
         </div>
         <div class="hero__temperature-box">
           <p class="hero__temperature">${Math.round(
-            temperature
+            weatherData.temperature
           )}${unitMeasurement}</p>
-          <img src="${weatherData.current.condition.icon}" alt="${
-      weatherData.current.condition.text
-    }">
+          <img src="${weatherData.img}" alt="${weatherData.imgText}">
         </div>
       </div>
       <ul class="hero__list">
         <li class="hero__item">
           <p class="hero__weather-data">Влажность</p>
           <p class="hero__weather-parameter">
-            <span class="hero__humidity">${weatherData.current.humidity}</span>
+            <span class="hero__humidity">${weatherData.humidity}</span>
             %
           </p>
         </li>
         <li class="hero__item">
           <p class="hero__weather-data">Видимость</p>
           <p class="hero__weather-parameter">
-            <span class="hero__mileage">${weatherData.current.vis_km}</span>
+            <span class="hero__mileage">${weatherData.vis}</span>
             км
           </p>
         </li>
         <li class="hero__item">
           <p class="hero__weather-data">Осадки</p>
           <p class="hero__weather-parameter">
-            <span class="hero__pressure">${Math.ceil(
-              weatherData.current.precip_mm
-            )}</span>
+            <span class="hero__pressure">${Math.ceil(weatherData.precip)}</span>
             мм.
           </p>
         </li>
         <li class="hero__item">
           <p class="hero__weather-data">Ветер</p>
           <p class="hero__weather-parameter">
-            <span class="hero__speed">${Math.round(
-              weatherData.current.wind_kph
-            )}</span>
+            <span class="hero__speed">${Math.round(weatherData.wind)}</span>
             м/с
           </p>
         </li>
@@ -121,7 +170,7 @@ export class MainWeather {
     }
 
     this.parent.innerHTML = heroContent;
-    this.headerTime.innerHTML = weatherData.location.localtime.substring(
+    this.headerTime.innerHTML = weatherData.localtime.substring(
       START_STRING,
       END_STRING
     );

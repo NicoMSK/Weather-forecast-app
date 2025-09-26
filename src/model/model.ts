@@ -38,11 +38,23 @@ export class WeatherModel {
       case "tommorow":
         hoursSort = weatherData.forecast.forecastday[1].hour;
         break;
+      case "threeDay":
+        const daysSort = weatherData.forecast.forecastday;
+        if (!daysSort) throw new Error(`${daysSort} не существует`);
+
+        for (let i = 0; i < daysSort.length; i++) {
+          const date = daysSort[i].date.split("-").reverse().join("-");
+          const imgUrl = daysSort[i].day.condition.icon;
+          const imgText = daysSort[i].day.condition.text;
+          const temperature = Math.round(daysSort[i].day.avgtemp_c);
+
+          renderDaysData.push({ date, imgUrl, imgText, temperature });
+        }
+
+        return renderDaysData;
     }
 
-    if (!hoursSort) {
-      throw new Error("hoursSort не существует");
-    }
+    if (!hoursSort) throw new Error(`${hoursSort} не существует`);
 
     const evenHourse = hoursSort.filter((hour, index) => index % 2 === 0);
 
@@ -56,21 +68,5 @@ export class WeatherModel {
     }
 
     return renderDaysData;
-  }
-
-  dataWeekForFooterRender(weatherData: weatherType.ForecastDayWeather) {
-    const renderThreeDayData = [];
-    const daysSort = weatherData.forecast.forecastday;
-
-    for (let i = 0; i < daysSort.length; i++) {
-      const date = daysSort[i].date.split("-").reverse().join("-");
-      const imgUrl = daysSort[i].day.condition.icon;
-      const imgText = daysSort[i].day.condition.text;
-      const temperature = Math.round(daysSort[i].day.avgtemp_c);
-
-      renderThreeDayData.push({ date, imgUrl, imgText, temperature });
-    }
-
-    return renderThreeDayData;
   }
 }

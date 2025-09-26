@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { dateCurrent } from "@/model/dateModel";
+import { formatDate } from "@/model/formatDate";
 
 test("date current", () => {
-  expect(dateCurrent(new Date(2025, 8, 3))).toBe("Сент 3, Ср");
+  expect(formatDate(new Date(2025, 8, 3))).toBe("Сент 3, Ср");
 });
