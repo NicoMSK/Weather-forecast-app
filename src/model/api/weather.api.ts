@@ -24,5 +24,5 @@ export async function getWeatherFromMockApi(
   location: string,
   days: number
 ): Promise<ForecastDayWeather> {
-  return mock as ForecastDayWeather;
+  return mock;
 }

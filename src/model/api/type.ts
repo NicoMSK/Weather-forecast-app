@@ -45,10 +45,10 @@ type CurrentWeather = {
   uv: number;
   gust_mph: number;
   gust_kph: number;
-  short_rad: number;
-  diff_rad: number;
-  dni: number;
-  gti: number;
+  short_rad?: number;
+  diff_rad?: number;
+  dni?: number;
+  gti?: number;
 };
 
 type HourWeather = {

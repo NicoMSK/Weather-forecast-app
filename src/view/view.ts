@@ -72,54 +72,10 @@ export class MainWeather {
     this.parent = parent;
   }
 
-  getDataForWeatherRender(
-    weatherData: weatherType.ForecastDayWeather,
-    period: string
-  ) {
-    switch (period) {
-      case "today":
-        return {
-          location: weatherData.location.name,
-          localtime: weatherData.location.localtime,
-          temperature: weatherData.current.temp_c,
-          img: weatherData.current.condition.icon,
-          imgText: weatherData.current.condition.text,
-          humidity: weatherData.current.humidity,
-          vis: weatherData.current.vis_km,
-          precip: weatherData.current.precip_mm,
-          wind: weatherData.current.wind_kph,
-        };
-      case "tommorow":
-        return {
-          location: weatherData.location.name,
-          localtime: weatherData.location.localtime,
-          temperature: weatherData.forecast.forecastday[0].day.avgtemp_c,
-          img: weatherData.forecast.forecastday[0].day.condition.icon,
-          imgText: weatherData.forecast.forecastday[0].day.condition.text,
-          humidity: weatherData.forecast.forecastday[0].day.avghumidity,
-          vis: weatherData.forecast.forecastday[0].day.avgvis_km,
-          precip: weatherData.forecast.forecastday[0].day.totalprecip_mm,
-          wind: weatherData.forecast.forecastday[0].day.maxwind_kph,
-        };
-      case "threeDay":
-        return {
-          location: weatherData.location.name,
-          localtime: weatherData.location.localtime,
-          temperature: weatherData.forecast.forecastday[2].day.avgtemp_c,
-          img: weatherData.forecast.forecastday[2].day.condition.icon,
-          imgText: weatherData.forecast.forecastday[2].day.condition.text,
-          humidity: weatherData.forecast.forecastday[2].day.avghumidity,
-          vis: weatherData.forecast.forecastday[2].day.avgvis_km,
-          precip: weatherData.forecast.forecastday[2].day.totalprecip_mm,
-          wind: weatherData.forecast.forecastday[2].day.maxwind_kph,
-        };
-    }
-  }
-
-  renderWeather(
+  renderWeatherMain(
     weatherData: WeatherDataDay,
     dateCurrent: string,
-    unitMeasurement: string
+    unitMeasurement: "℃" | "℉"
   ) {
     const heroContent = `
       <div class="hero__box">
