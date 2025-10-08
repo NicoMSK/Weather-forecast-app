@@ -1,22 +1,21 @@
-import * as weatherType from "@/model/api/type";
 import * as weatherTypeMode from "@/model/model";
+import { getTextSlice, safetyQuerySelector } from "@/util";
 
-const START_STRING = 16;
-const END_STRING = 10;
-
-const heroContainer = document.querySelector(".hero__weather-wrapper");
-export const headerListItems = document.querySelectorAll(".header__item");
-export const headerList = document.querySelector(".header");
-export const todayButton = document.querySelector(".header__button--today");
-export const tommorowButton = document.querySelector(
-  ".header__button--tommorow"
+const heroContainer = safetyQuerySelector<HTMLElement>(
+  ".hero__weather-wrapper"
 );
-export const threeDaysButton = document.querySelector(
+export const headerListItems = document.querySelectorAll(".header__item");
+export const headerList = safetyQuerySelector<HTMLElement>(".header");
+export const todayButton = safetyQuerySelector<HTMLElement>(
+  ".header__button--today"
+);
+export const tommorowButton = safetyQuerySelector(".header__button--tommorow");
+export const threeDaysButton = safetyQuerySelector(
   ".header__button--three-days"
 );
 
 export function updateControlButtons(
-  curDateMode: weatherTypeMode.WeatherDateType
+  curDateMode: weatherTypeMode.WeatherDateMode
 ) {
   const headerListItemsArray = [...headerListItems];
 
@@ -34,10 +33,6 @@ export function updateControlButtons(
   } else {
     targetButton.classList.add("header__item--current");
   }
-}
-
-if (!(heroContainer instanceof HTMLElement)) {
-  throw new Error("hero-Container не найден");
 }
 
 type WeatherDataDay = {
@@ -62,17 +57,20 @@ type WeatherIndicatorsByTime = {
 
 export class MainWeather {
   private parent: HTMLElement;
-  headerTime = document.querySelector(".header__time");
-  weatherClockList = document.querySelector(".footer__list");
+  headerTime = safetyQuerySelector<HTMLElement>(".header__time");
+  weatherClockList = safetyQuerySelector<HTMLHtmlElement>(".footer__list");
   footerTemplate =
-    document.querySelector<HTMLTemplateElement>(".footer__template")!.content;
-  itemTemplate = this.footerTemplate.querySelector(".footer__item");
+    safetyQuerySelector<HTMLTemplateElement>(".footer__template").content;
+  itemTemplate = safetyQuerySelector<HTMLElement>(
+    ".footer__item",
+    this.footerTemplate
+  );
 
   constructor(parent: HTMLElement) {
     this.parent = parent;
   }
 
-  renderWeatherMain(
+  renderWeatherHero(
     weatherData: WeatherDataDay,
     dateCurrent: string,
     unitMeasurement: "℃" | "℉"
@@ -126,12 +124,7 @@ export class MainWeather {
     }
 
     this.parent.innerHTML = heroContent;
-    this.headerTime.innerHTML = weatherData.localtime.substring(
-      START_STRING,
-      END_STRING
-    );
-
-    this.renderFooter({ footerItems: [], period: "", unitMeasurement: "" });
+    this.headerTime.innerHTML = getTextSlice(weatherData.localtime);
   }
 
   renderFooter(params: {
@@ -147,12 +140,18 @@ export class MainWeather {
 
     for (let i = 0; i < params.footerItems.length; i++) {
       const footerClockItem = this.itemTemplate?.cloneNode(true) as HTMLElement;
-      const timeFooter = footerClockItem.querySelector(".footer__time")!;
-      const imgUrlFooter =
-        footerClockItem.querySelector<HTMLImageElement>(".footer__img")!;
-      const temperatureFooter = footerClockItem.querySelector(
-        ".footer__temperature"
-      )!;
+      const timeFooter = safetyQuerySelector<HTMLElement>(
+        ".footer__time",
+        footerClockItem
+      );
+      const imgUrlFooter = safetyQuerySelector<HTMLImageElement>(
+        ".footer__img",
+        footerClockItem
+      );
+      const temperatureFooter = safetyQuerySelector<HTMLElement>(
+        ".footer__temperature",
+        footerClockItem
+      );
 
       timeFooter.textContent = String(params.footerItems[i][params.period]);
       imgUrlFooter.src = params.footerItems[i].imgUrl;

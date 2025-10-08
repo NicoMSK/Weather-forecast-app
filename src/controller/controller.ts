@@ -1,97 +1,74 @@
 import * as date from "@/model/formatDate";
-import { WeatherModel } from "@/model/model";
-import type { WeatherDateType } from "@/model/model";
+import { WeatherModel, DAY_OPT_BY_DATE_MODE } from "@/model/model";
+import { type WeatherDateMode } from "@/model/model";
 import * as renderView from "@/view/view";
-import * as temperatureToggle from "@/view/temperatureSwitching.view";
-
-let weatherDateType: WeatherDateType = {
-  currentDateMode: "today",
-  days: 1,
-  dateDays: 0,
-  currentPeriod: "time",
-};
+import * as temperatureSwitch from "@/view/temperatureSwitching.view";
 
 const weatherModel = new WeatherModel();
+let currentDateMode: WeatherDateMode = "today";
 
 async function startRenderWeather(location: string) {
-  weatherModel.setParametersLocation(location, weatherDateType.days);
-  const weatherDataToday = await weatherModel.getWeather();
-  if (!weatherDataToday) {
+  const currentOption = DAY_OPT_BY_DATE_MODE[currentDateMode];
+
+  weatherModel.setParametersLocation(location, currentOption.days);
+
+  const todayWeatherData = await weatherModel.getWeather();
+
+  if (!todayWeatherData) {
     throw new Error("weatherDataToday не существует");
   }
 
-  const renderFooterToday = await weatherModel.dataForFooterRender(
-    weatherDataToday,
-    weatherDateType.currentDateMode
+  const footerWeatherData = weatherModel.getDataRenderFooter(
+    todayWeatherData,
+    currentDateMode
   );
 
-  const dateCurrent = date.formatDate(weatherDateType.dateDays);
+  const currentDate = date.formatDate(currentOption.dateDays);
 
-  const dataWeather = weatherModel.getDataForWeatherRender(
-    weatherDataToday,
-    weatherDateType.currentDateMode
+  const weatherData = weatherModel.getDataForWeatherRender(
+    todayWeatherData,
+    currentDateMode
   );
 
-  if (!dataWeather) {
-    throw new Error(`${dataWeather} не существует`);
+  if (!weatherData) {
+    throw new Error("dataWeather не существует");
   }
 
-  renderView.mainWeather.renderWeatherMain(
-    dataWeather,
-    dateCurrent,
+  renderView.mainWeather.renderWeatherHero(
+    weatherData,
+    currentDate,
     weatherModel.unitSymbolTemperature
   );
 
   renderView.mainWeather.renderFooter({
-    footerItems: renderFooterToday,
-    period: weatherDateType.currentPeriod,
+    footerItems: footerWeatherData,
+    period: currentOption.currentPeriod as "time" | "date",
     unitMeasurement: weatherModel.unitSymbolTemperature,
   });
 }
 
 startRenderWeather("Moscow");
 
-temperatureToggle.temperatureToggle?.addEventListener("click", () => {
-  temperatureToggle.temperatureToggle?.classList.toggle("header__toggle--on");
-
-  weatherModel.toggleUnitTemperature();
-
+temperatureSwitch.temperatureToggle?.addEventListener("click", () => {
+  const currentUnit = weatherModel.toggleUnitTemperature();
+  temperatureSwitch.buttonSwitchTemperature(currentUnit);
   startRenderWeather("Moscow");
 });
 
-renderView.todayButton?.addEventListener("click", async () => {
-  weatherDateType = {
-    currentDateMode: "today",
-    days: 1,
-    dateDays: 0,
-    currentPeriod: "time",
-  };
-
+renderView.todayButton?.addEventListener("click", () => {
+  currentDateMode = "today";
+  renderView.updateControlButtons(currentDateMode);
   startRenderWeather("Moscow");
-
-  renderView.updateControlButtons(weatherDateType.currentDateMode);
 });
 
-renderView.tommorowButton?.addEventListener("click", async () => {
-  weatherDateType = {
-    currentDateMode: "tommorow",
-    days: 2,
-    dateDays: 1,
-    currentPeriod: "time",
-  };
+renderView.tommorowButton?.addEventListener("click", () => {
+  currentDateMode = "tommorow";
+  renderView.updateControlButtons(currentDateMode);
   startRenderWeather("Moscow");
-
-  renderView.updateControlButtons(weatherDateType.currentDateMode);
 });
 
-renderView.threeDaysButton?.addEventListener("click", async () => {
-  weatherDateType = {
-    currentDateMode: "threeDay",
-    days: 3,
-    dateDays: 2,
-    currentPeriod: "date",
-  };
+renderView.threeDaysButton?.addEventListener("click", () => {
+  currentDateMode = "threeDay";
+  renderView.updateControlButtons(currentDateMode);
   startRenderWeather("Moscow");
-
-  renderView.updateControlButtons(weatherDateType.currentDateMode);
 });

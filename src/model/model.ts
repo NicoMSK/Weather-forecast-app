@@ -1,20 +1,26 @@
 import * as weatherApi from "@/model/api/weather.api.ts";
 import * as weatherType from "@/model/api/type";
+import { getTextSlice } from "@/util";
 
-const START_STRING = 16;
-const END_STRING = 10;
+export const DAY_OPT_BY_DATE_MODE = {
+  today: { days: 1, dateDays: 0, currentPeriod: "time" },
+  tommorow: { days: 2, dateDays: 1, currentPeriod: "time" },
+  threeDay: { days: 3, dateDays: 2, currentPeriod: "date" },
+} as const;
 
-export type WeatherDateType = {
-  currentDateMode: "today" | "tommorow" | "threeDay";
-  days: 1 | 2 | 3;
-  dateDays: 0 | 1 | 2;
-  currentPeriod: "time" | "date";
-};
+export type WeatherDateMode = keyof typeof DAY_OPT_BY_DATE_MODE;
+
+const TEMPERATURE_TYPE = {
+  celcium: "℃",
+  farenheight: "℉",
+} as const;
+
+type TemperatureType = keyof typeof TEMPERATURE_TYPE;
 
 export class WeatherModel {
   location: string = "";
   days: number = 0;
-  unit: "c" | "f" = "c";
+  unit: TemperatureType = "celcium";
 
   setParametersLocation(location: string, days: number) {
     this.location = location;
@@ -31,18 +37,70 @@ export class WeatherModel {
   }
 
   toggleUnitTemperature() {
-    if (this.unit === "c") {
-      this.unit = "f";
+    if (this.unit === "celcium") {
+      return (this.unit = "farenheight");
     } else {
-      this.unit = "c";
+      return (this.unit = "celcium");
     }
   }
 
-  get unitSymbolTemperature(): "℃" | "℉" {
-    if (this.unit === "c") {
-      return "℃";
+  get unitSymbolTemperature() {
+    return TEMPERATURE_TYPE[this.unit];
+  }
+
+  getTempKeyDayCurrent(unit: TemperatureType) {
+    try {
+      if (unit === "celcium") {
+        return { current: "temp_c", avg: "avgtemp_c" };
+      } else {
+        return { current: "temp_f", avg: "avgtemp_f" };
+      }
+    } catch (error) {
+      throw new Error("unexpected unit: " + unit);
+    }
+  }
+
+  getFormattedDataFromApi(
+    weatherData: weatherType.ForecastDayWeather,
+    period: string,
+    days?: number
+  ) {
+    const LOCATION = weatherData.location.name;
+    const LOCAL_TIME = weatherData.location.localtime;
+
+    if (period === "today") {
+      const temperaruteKey = this.getTempKeyDayCurrent(this.unit);
+
+      return {
+        location: LOCATION,
+        localtime: LOCAL_TIME,
+        temperature: weatherData.current[temperaruteKey.current],
+        img: weatherData.current.condition.icon,
+        imgText: weatherData.current.condition.text,
+        humidity: weatherData.current.humidity,
+        vis: weatherData.current.vis_km,
+        precip: weatherData.current.precip_mm,
+        wind: weatherData.current.wind_kph,
+      };
     } else {
-      return "℉";
+      const tempKeyThreeDay = this.getTempKeyDayCurrent(this.unit);
+
+      if (days === undefined) {
+        throw new Error("days НЕ верное число");
+      }
+
+      return {
+        location: LOCATION,
+        localtime: LOCAL_TIME,
+        temperature:
+          weatherData.forecast.forecastday[days].day[tempKeyThreeDay.avg],
+        img: weatherData.forecast.forecastday[days].day.condition.icon,
+        imgText: weatherData.forecast.forecastday[days].day.condition.text,
+        humidity: weatherData.forecast.forecastday[days].day.avghumidity,
+        vis: weatherData.forecast.forecastday[days].day.avgvis_km,
+        precip: weatherData.forecast.forecastday[days].day.totalprecip_mm,
+        wind: weatherData.forecast.forecastday[days].day.maxwind_kph,
+      };
     }
   }
 
@@ -50,96 +108,73 @@ export class WeatherModel {
     weatherData: weatherType.ForecastDayWeather,
     period: string
   ) {
-    const tempKeyDayCurrent = `temp_${this.unit}` as "temp_c" | "temp_f";
-    const tempKeyThreeDay = `avgtemp_${this.unit}` as "avgtemp_c" | "avgtemp_f";
-
     switch (period) {
       case "today":
-        return {
-          location: weatherData.location.name,
-          localtime: weatherData.location.localtime,
-          temperature: weatherData.current[tempKeyDayCurrent],
-          img: weatherData.current.condition.icon,
-          imgText: weatherData.current.condition.text,
-          humidity: weatherData.current.humidity,
-          vis: weatherData.current.vis_km,
-          precip: weatherData.current.precip_mm,
-          wind: weatherData.current.wind_kph,
-        };
+        return this.getFormattedDataFromApi(weatherData, period);
       case "tommorow":
-        return {
-          location: weatherData.location.name,
-          localtime: weatherData.location.localtime,
-          temperature: weatherData.forecast.forecastday[0].day[tempKeyThreeDay],
-          img: weatherData.forecast.forecastday[0].day.condition.icon,
-          imgText: weatherData.forecast.forecastday[0].day.condition.text,
-          humidity: weatherData.forecast.forecastday[0].day.avghumidity,
-          vis: weatherData.forecast.forecastday[0].day.avgvis_km,
-          precip: weatherData.forecast.forecastday[0].day.totalprecip_mm,
-          wind: weatherData.forecast.forecastday[0].day.maxwind_kph,
-        };
+        return this.getFormattedDataFromApi(weatherData, period, 0);
       case "threeDay":
-        return {
-          location: weatherData.location.name,
-          localtime: weatherData.location.localtime,
-          temperature: weatherData.forecast.forecastday[2].day[tempKeyThreeDay],
-          img: weatherData.forecast.forecastday[2].day.condition.icon,
-          imgText: weatherData.forecast.forecastday[2].day.condition.text,
-          humidity: weatherData.forecast.forecastday[2].day.avghumidity,
-          vis: weatherData.forecast.forecastday[2].day.avgvis_km,
-          precip: weatherData.forecast.forecastday[2].day.totalprecip_mm,
-          wind: weatherData.forecast.forecastday[2].day.maxwind_kph,
-        };
+        return this.getFormattedDataFromApi(weatherData, period, 2);
     }
   }
 
-  dataForFooterRender(
+  getWeatherForDay(
     weatherData: weatherType.ForecastDayWeather,
     timePeriod: string
   ) {
     const renderDaysData = [];
     let hoursSort = null;
 
-    switch (timePeriod) {
-      case "today":
-        hoursSort = weatherData.forecast.forecastday[0].hour;
-        break;
-      case "tommorow":
-        hoursSort = weatherData.forecast.forecastday[1].hour;
-        break;
-      case "threeDay":
-        const daysSort = weatherData.forecast.forecastday;
-        const tempKeyThreeDay = `avgtemp_${this.unit}` as
-          | "avgtemp_c"
-          | "avgtemp_f";
-        if (!daysSort) throw new Error(`${daysSort} не существует`);
-
-        for (let i = 0; i < daysSort.length; i++) {
-          const date = daysSort[i].date.split("-").reverse().join("-");
-          const imgUrl = daysSort[i].day.condition.icon;
-          const imgText = daysSort[i].day.condition.text;
-          const temperature = Math.round(daysSort[i].day[tempKeyThreeDay]);
-
-          renderDaysData.push({ date, imgUrl, imgText, temperature });
-        }
-
-        return renderDaysData;
+    if (timePeriod === "today") {
+      hoursSort = weatherData.forecast.forecastday[0].hour;
+    } else {
+      hoursSort = weatherData.forecast.forecastday[1].hour;
     }
 
-    if (!hoursSort) throw new Error(`${hoursSort} не существует`);
+    if (!hoursSort) throw new Error("hoursSort не существует");
 
-    const evenHourse = hoursSort.filter((hour, index) => index % 2 === 0);
+    const evenHours = hoursSort.filter((hour, index) => index % 2 === 0);
+    const tempKeyDay = this.getTempKeyDayCurrent(this.unit);
 
-    for (let i = 0; i < evenHourse.length; i++) {
-      const tempKeyDay = `temp_${this.unit}` as "temp_c" | "temp_f";
-      const time = evenHourse[i].time.substring(START_STRING, END_STRING);
-      const imgUrl = evenHourse[i].condition.icon;
-      const imgText = evenHourse[i].condition.text;
-      const temperature = Math.round(evenHourse[i][tempKeyDay]);
-
-      renderDaysData.push({ time, imgUrl, imgText, temperature });
+    for (let i = 0; i < evenHours.length; i++) {
+      renderDaysData.push({
+        time: getTextSlice(evenHours[i].time),
+        imgUrl: evenHours[i].condition.icon,
+        imgText: evenHours[i].condition.text,
+        temperature: Math.round(evenHours[i][tempKeyDay.current]),
+      });
     }
 
     return renderDaysData;
+  }
+
+  getWeatherForThreeDay(weatherData: weatherType.ForecastDayWeather) {
+    const renderDaysData = [];
+    const daysSort = weatherData.forecast.forecastday;
+    const tempKeyThreeDay = this.getTempKeyDayCurrent(this.unit);
+
+    if (!daysSort) throw new Error("daysSort не существует");
+
+    for (let i = 0; i < daysSort.length; i++) {
+      renderDaysData.push({
+        date: daysSort[i].date.split("-").reverse().join("-"),
+        imgUrl: daysSort[i].day.condition.icon,
+        imgText: daysSort[i].day.condition.text,
+        temperature: Math.round(daysSort[i].day[tempKeyThreeDay.avg]),
+      });
+    }
+
+    return renderDaysData;
+  }
+
+  getDataRenderFooter(
+    weatherData: weatherType.ForecastDayWeather,
+    timePeriod: string
+  ) {
+    if (timePeriod === "threeDay") {
+      return this.getWeatherForThreeDay(weatherData);
+    } else {
+      return this.getWeatherForDay(weatherData, timePeriod);
+    }
   }
 }

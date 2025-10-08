@@ -46,7 +46,7 @@
     content: "";
     position: absolute;
     bottom: -0.7rem;
-    width: 120%;
+    width: calc(100% + 20px);
     height: 0px;
     border: 2px solid #695d5d;
   }
