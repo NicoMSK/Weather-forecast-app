@@ -1,5 +1,5 @@
 import * as weatherTypeMode from "@/model/model";
-import { getTextSlice, safetyQuerySelector } from "@/util";
+import { getFormattedTime, safetyQuerySelector } from "@/util";
 
 const heroContainer = safetyQuerySelector<HTMLElement>(
   ".hero__weather-wrapper"
@@ -124,7 +124,7 @@ export class MainWeather {
     }
 
     this.parent.innerHTML = heroContent;
-    this.headerTime.innerHTML = getTextSlice(weatherData.localtime);
+    this.headerTime.innerHTML = getFormattedTime(weatherData.localtime);
   }
 
   renderFooter(params: {
