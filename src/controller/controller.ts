@@ -1,6 +1,5 @@
 import * as date from "@/model/formatDate";
 import { WeatherModel, DAY_OPT_BY_DATE_MODE } from "@/model/model";
-import { type WeatherDateMode } from "@/model/model";
 import * as renderView from "@/view/view";
 import * as temperatureSwitch from "@/view/temperatureSwitching.view";
 import * as showDownload from "@/view/downloadWindow";

@@ -119,10 +119,6 @@ export class MainWeather {
         </li>
       </ul>`;
 
-    if (!this.headerTime) {
-      throw new Error("headerTime не найден");
-    }
-
     this.parent.innerHTML = heroContent;
     this.headerTime.innerHTML = getFormattedTime(weatherData.localtime);
   }
@@ -132,10 +128,6 @@ export class MainWeather {
     period: "time" | "date";
     unitMeasurement: "℃" | "℉";
   }) {
-    if (!(this.weatherClockList instanceof HTMLElement)) {
-      throw new Error("weatherClockList не найден");
-    }
-
     this.weatherClockList.innerHTML = "";
 
     for (let i = 0; i < params.footerItems.length; i++) {

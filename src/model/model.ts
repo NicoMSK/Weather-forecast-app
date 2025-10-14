@@ -69,10 +69,6 @@ export class WeatherModel {
   }
 
   getFormattedDataFromApi(weatherData: weatherType.ForecastDayWeather) {
-    if (!this.weatherData) {
-      throw new Error("weatherData не существует");
-    }
-
     const { location, current, forecast } = weatherData;
     const temperaruteKey = this.getTempKeyDayCurrent(this.unit);
     const days = DAY_OPT_BY_DATE_MODE[this.currentDateMode].dateDays;
@@ -114,8 +110,6 @@ export class WeatherModel {
     } else {
       hoursSort = forecast.forecastday[1].hour;
     }
-
-    if (!hoursSort) throw new Error("hoursSort не существует");
 
     const evenHours = hoursSort.filter((hour, index) => index % 2 === 0);
     const tempKeyDay = this.getTempKeyDayCurrent(this.unit);
