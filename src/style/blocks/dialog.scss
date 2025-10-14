@@ -1,0 +1,49 @@
+@use "../common/mixin.scss" as *;
+@use "../common/fonts.scss" as *;
+@use "../common/variables.scss" as *;
+
+.dialog {
+  align-items: center;
+  inset: 0;
+  position: fixed;
+  border: none;
+  outline: none;
+  border-radius: 16px;
+  z-index: 99;
+
+  &::backdrop {
+    position: fixed;
+    inset: 0px;
+    background: rgba(37, 37, 37, 0.7);
+    backdrop-filter: blur(10px);
+  }
+}
+
+.dialog__loader {
+  display: flex;
+  justify-content: center;
+}
+
+.dialog__loader-spinner {
+  width: 64px;
+  height: 64px;
+  border: 8px solid;
+  border-color: #3d5af1 transparent #3d5af1 transparent;
+  border-radius: 50%;
+  animation: spin-anim 1.2s linear infinite;
+}
+
+@keyframes spin-anim {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.dialog__text {
+  @include title-basic($main-font, $black);
+
+  font-size: 25px;
+}
