@@ -29,25 +29,19 @@ export class WeatherModel {
     this.days = days;
   }
 
-  validateWeatherData(): asserts this is {
-    weatherData: weatherType.ForecastDayWeather;
-  } {
+  async getWeather() {
+    const daysOpt = DAY_OPT_BY_DATE_MODE[this.currentDateMode].days;
+
+    this.weatherData = await weatherApi.getWeatherFromAPI(
+      this.location,
+      daysOpt
+    );
+
     if (!this.weatherData) {
       throw new Error("weatherData не существует");
     }
-  }
 
-  async getWeather() {
-    const daysOpt = DAY_OPT_BY_DATE_MODE[this.currentDateMode].days;
-    try {
-      return (this.weatherData = await weatherApi.getWeatherFromAPI(
-        this.location,
-        daysOpt
-      ));
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
+    return this.getFormattedDataFromApi(this.weatherData);
   }
 
   toggleUnitTemperature() {
@@ -74,10 +68,12 @@ export class WeatherModel {
     }
   }
 
-  getFormattedDataFromApi() {
-    this.validateWeatherData();
+  getFormattedDataFromApi(weatherData: weatherType.ForecastDayWeather) {
+    if (!this.weatherData) {
+      throw new Error("weatherData не существует");
+    }
 
-    const { location, current, forecast } = this.weatherData;
+    const { location, current, forecast } = weatherData;
     const temperaruteKey = this.getTempKeyDayCurrent(this.unit);
     const days = DAY_OPT_BY_DATE_MODE[this.currentDateMode].dateDays;
 
@@ -108,11 +104,9 @@ export class WeatherModel {
     };
   }
 
-  getWeatherForDay() {
-    this.validateWeatherData();
-
+  getWeatherForDay(weatherData: weatherType.ForecastDayWeather) {
     const renderDaysData = [];
-    const { forecast } = this.weatherData;
+    const { forecast } = weatherData;
     let hoursSort = null;
 
     if (this.currentDateMode === "today") {
@@ -138,11 +132,9 @@ export class WeatherModel {
     return renderDaysData;
   }
 
-  getWeatherForThreeDay() {
-    this.validateWeatherData();
-
+  getWeatherForThreeDay(weatherData: weatherType.ForecastDayWeather) {
     const renderDaysData = [];
-    const daysSort = this.weatherData.forecast.forecastday;
+    const daysSort = weatherData.forecast.forecastday;
     const tempKeyThreeDay = this.getTempKeyDayCurrent(this.unit);
 
     if (!daysSort) throw new Error("daysSort не существует");
@@ -160,10 +152,14 @@ export class WeatherModel {
   }
 
   getDataRenderFooter() {
+    if (!this.weatherData) {
+      throw new Error("weatherData не существует");
+    }
+
     if (this.currentDateMode === "threeDay") {
-      return this.getWeatherForThreeDay();
+      return this.getWeatherForThreeDay(this.weatherData);
     } else {
-      return this.getWeatherForDay();
+      return this.getWeatherForDay(this.weatherData);
     }
   }
 }
