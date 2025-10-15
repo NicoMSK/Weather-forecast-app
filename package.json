@@ -10,8 +10,11 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^24.3.0",
     "fast-glob": "^3.3.3",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "sass": "^1.90.0",
     "typescript": "~5.8.3",
     "vite": "^7.1.2",

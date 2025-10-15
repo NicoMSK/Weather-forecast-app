@@ -1,6 +1,8 @@
 import * as weatherApi from "@/model/api/weather.api.ts";
-import * as weatherType from "@/model/api/type";
+import * as weatherType from "@/model/api/weatherType";
+import * as cityApi from "@/model/api/city.api";
 import { getFormattedTime } from "@/util";
+import type { CityNames } from "./api/cityType";
 
 export const DAY_OPT_BY_DATE_MODE = {
   today: { days: 1, dateDays: 0, currentPeriod: "time" },
@@ -19,15 +21,9 @@ type TemperatureType = keyof typeof TEMPERATURE_TYPE;
 
 export class WeatherModel {
   location: string = "Moscow";
-  days: number = 0;
   currentDateMode: WeatherDateMode = "today";
   unit: TemperatureType = "celcium";
   weatherData: weatherType.ForecastDayWeather | null = null;
-
-  setParametersLocation(location: string, days: number) {
-    this.location = location;
-    this.days = days;
-  }
 
   async getWeather() {
     const daysOpt = DAY_OPT_BY_DATE_MODE[this.currentDateMode].days;
@@ -42,6 +38,20 @@ export class WeatherModel {
     }
 
     return this.getFormattedDataFromApi(this.weatherData);
+  }
+
+  nameCity: CityNames | null = null;
+
+  async getCity() {
+    this.nameCity = await cityApi.getCityFromApi(this.location);
+    return this.nameCity;
+  }
+
+  tttttt(inputValue: string) {
+    const nameCity = this.nameCity[1].local_names.ru.toLowerCase();
+
+    if (nameCity === inputValue.toLowerCase()) {
+    }
   }
 
   toggleUnitTemperature() {
