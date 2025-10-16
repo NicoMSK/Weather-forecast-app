@@ -1,3 +1,4 @@
+@use "../common/mixin.scss" as *;
 @use "../common/fonts.scss" as *;
 @use "../common/variables.scss" as *;
 
@@ -12,7 +13,7 @@ $width-temperature-box: 400px;
 
 .hero__search {
   margin: 0;
-  margin-bottom: 3.125rem;
+  margin-bottom: 40px;
   max-width: 44.6875rem;
   width: 100%;
 }
@@ -44,6 +45,20 @@ $width-temperature-box: 400px;
   outline: none;
 }
 
+.hero__input-error {
+  margin-top: 5px;
+  padding-left: 75px;
+  display: block;
+  font-family: $main-font;
+  font-size: 18px;
+  border-radius: 10px;
+  color: red;
+
+  &--hidden {
+    color: $black;
+  }
+}
+
 .hero__weather-wrapper {
   padding: 2.1875rem 1.75rem 0.625rem;
   width: 100%;
@@ -61,6 +76,7 @@ $width-temperature-box: 400px;
 
 .hero__location-box {
   display: flex;
+  flex: 0 1 0;
   flex-direction: column;
   justify-content: space-between;
 }

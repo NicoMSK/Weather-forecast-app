@@ -6,7 +6,7 @@ const HOST_URL = "http://api.openweathermap.org/geo/1.0";
 export async function getCityFromApi(city: string) {
   try {
     const response = await fetch(
-      `${HOST_URL}/direct?q=${city}&limit=2&appid=${API_KEY}`
+      `${HOST_URL}/direct?q=${city}&limit=1&appid=${API_KEY}`
     );
     if (!response.ok) {
       throw new Error(`Запрос вернулся с ошибкой ${response.status}`);

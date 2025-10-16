@@ -20,16 +20,33 @@ const TEMPERATURE_TYPE = {
 type TemperatureType = keyof typeof TEMPERATURE_TYPE;
 
 export class WeatherModel {
-  location: string = "Moscow";
+  location: string = "Париж";
   currentDateMode: WeatherDateMode = "today";
   unit: TemperatureType = "celcium";
   weatherData: weatherType.ForecastDayWeather | null = null;
+  nameCity: CityNames | null = null;
+
+  async getCity() {
+    const resultCityApi = await cityApi.getCityFromApi(this.location);
+    console.log(resultCityApi);
+    if (!resultCityApi || resultCityApi.length === 0) {
+      console.log("Такого города не существует");
+      return null;
+    }
+
+    this.nameCity = resultCityApi;
+    return this.nameCity;
+  }
 
   async getWeather() {
     const daysOpt = DAY_OPT_BY_DATE_MODE[this.currentDateMode].days;
 
+    if (!this.nameCity) {
+      throw new Error("Нет такого города");
+    }
+
     this.weatherData = await weatherApi.getWeatherFromAPI(
-      this.location,
+      this.nameCity[0].name,
       daysOpt
     );
 
@@ -38,20 +55,6 @@ export class WeatherModel {
     }
 
     return this.getFormattedDataFromApi(this.weatherData);
-  }
-
-  nameCity: CityNames | null = null;
-
-  async getCity() {
-    this.nameCity = await cityApi.getCityFromApi(this.location);
-    return this.nameCity;
-  }
-
-  tttttt(inputValue: string) {
-    const nameCity = this.nameCity[1].local_names.ru.toLowerCase();
-
-    if (nameCity === inputValue.toLowerCase()) {
-    }
   }
 
   toggleUnitTemperature() {
