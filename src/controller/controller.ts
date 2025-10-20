@@ -4,17 +4,15 @@ import * as renderView from "@/view/view";
 import * as temperatureSwitch from "@/view/temperatureSwitching.view";
 import * as showDownload from "@/view/downloadWindow";
 import * as searchCityView from "@/view/searchCity";
-import debounce from "lodash.debounce";
+import { CityModel } from "@/model/cityModel";
 
-const DEBOUNCE_INTERVAL_MS = 300;
 const weatherModel = new WeatherModel();
+const cityModel = new CityModel();
 
 async function startRenderWeather() {
   const currentOption = DAY_OPT_BY_DATE_MODE[weatherModel.currentDateMode];
 
-  const cityName = await showDownload.showsDownloadWindow(
-    weatherModel.getCity()
-  );
+  const cityName = await showDownload.showsDownloadWindow(cityModel.getCity());
 
   if (!cityName) {
     searchCityView.showError();
@@ -22,7 +20,7 @@ async function startRenderWeather() {
   }
 
   const weatherData = await showDownload.showsDownloadWindow(
-    weatherModel.getWeather()
+    weatherModel.getWeather(cityName[0].name)
   );
   const currentDate = date.formatDate(currentOption.dateDays);
   const footerWeatherData = weatherModel.getDataRenderFooter();
@@ -47,19 +45,15 @@ async function startRenderWeather() {
 
 startRenderWeather();
 
-const debouncedSearch = debounce(() => {
-  const cityName = searchCityView.searchCityName();
+const startSearchCity = () => {
+  const cityName = searchCityView.searchCityName()!;
 
-  if (!cityName) {
-    throw new Error("Такого города нету");
-  }
-
-  weatherModel.location = cityName;
+  cityModel.location = cityName;
   startRenderWeather();
-}, DEBOUNCE_INTERVAL_MS);
+};
 
 searchCityView.searchCity.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") debouncedSearch();
+  if (event.key === "Enter") startSearchCity();
 });
 
 searchCityView.searchCity.addEventListener(

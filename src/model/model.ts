@@ -1,8 +1,6 @@
 import * as weatherApi from "@/model/api/weather.api.ts";
 import * as weatherType from "@/model/api/weatherType";
-import * as cityApi from "@/model/api/city.api";
 import { getFormattedTime } from "@/util";
-import type { CityNames } from "./api/cityType";
 
 export const DAY_OPT_BY_DATE_MODE = {
   today: { days: 1, dateDays: 0, currentPeriod: "time" },
@@ -20,35 +18,14 @@ const TEMPERATURE_TYPE = {
 type TemperatureType = keyof typeof TEMPERATURE_TYPE;
 
 export class WeatherModel {
-  location: string = "Париж";
   currentDateMode: WeatherDateMode = "today";
   unit: TemperatureType = "celcium";
   weatherData: weatherType.ForecastDayWeather | null = null;
-  nameCity: CityNames | null = null;
 
-  async getCity() {
-    const resultCityApi = await cityApi.getCityFromApi(this.location);
-    console.log(resultCityApi);
-    if (!resultCityApi || resultCityApi.length === 0) {
-      console.log("Такого города не существует");
-      return null;
-    }
-
-    this.nameCity = resultCityApi;
-    return this.nameCity;
-  }
-
-  async getWeather() {
+  async getWeather(cityName: string) {
     const daysOpt = DAY_OPT_BY_DATE_MODE[this.currentDateMode].days;
 
-    if (!this.nameCity) {
-      throw new Error("Нет такого города");
-    }
-
-    this.weatherData = await weatherApi.getWeatherFromAPI(
-      this.nameCity[0].name,
-      daysOpt
-    );
+    this.weatherData = await weatherApi.getWeatherFromAPI(cityName, daysOpt);
 
     if (!this.weatherData) {
       throw new Error("weatherData не существует");
