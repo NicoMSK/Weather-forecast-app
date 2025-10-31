@@ -3,7 +3,7 @@ import type { CityNames } from "./api/cityType";
 
 export class CityModel {
   location: string = "Москва";
-  nameCity: CityNames | null = null;
+  cityName: CityNames | null = null;
 
   async getCity() {
     const resultCityApi = await cityApi.getCityFromApi(this.location);
@@ -13,7 +13,7 @@ export class CityModel {
       return null;
     }
 
-    this.nameCity = resultCityApi;
-    return this.nameCity;
+    this.cityName = resultCityApi;
+    return this.cityName;
   }
 }

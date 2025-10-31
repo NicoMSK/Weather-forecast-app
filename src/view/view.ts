@@ -35,7 +35,7 @@ export function updateControlButtons(
   }
 }
 
-type WeatherDataDay = {
+export type WeatherDataDay = {
   location: string;
   localtime: string;
   temperature: number;
