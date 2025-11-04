@@ -9,7 +9,7 @@ import { CityModel } from "@/model/cityModel";
 const weatherModel = new WeatherModel();
 const cityModel = new CityModel();
 
-async function initApp() {
+async function updateWeatherView() {
   const cityName = await showDownload.showsDownloadWindow(cityModel.getCity());
 
   if (!cityName) {
@@ -49,50 +49,50 @@ async function startRenderWeather(weatherData: renderView.WeatherDataDay) {
   });
 }
 
-initApp();
+updateWeatherView();
 
 const startSearchCity = () => {
-  const cityNameInput = searchCityView.getCityNameInput()!;
+  const cityNameInput = searchCityView.getInputValue();
 
   if (cityModel.location === cityNameInput) return;
 
   cityModel.location = cityNameInput;
 
-  initApp();
+  updateWeatherView();
 };
 
-searchCityView.searchCity.addEventListener("keydown", (event) => {
+searchCityView.searchCityInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     startSearchCity();
   }
 });
 
-searchCityView.searchCity.addEventListener("input", () => {
-  const cityNameInput = searchCityView.getCityNameInput();
+searchCityView.searchCityInput.addEventListener("input", () => {
+  const cityName = searchCityView.getInputValue();
 
-  searchCityView.validateStringEmpty(cityNameInput);
+  searchCityView.validateStringEmpty(cityName);
 });
 
 temperatureSwitch.temperatureToggle?.addEventListener("click", () => {
   const currentUnit = weatherModel.toggleUnitTemperature();
   temperatureSwitch.buttonSwitchTemperature(currentUnit);
-  initApp();
+  updateWeatherView();
 });
 
 renderView.todayButton?.addEventListener("click", () => {
   weatherModel.currentDateMode = "today";
   renderView.updateControlButtons(weatherModel.currentDateMode);
-  initApp();
+  updateWeatherView();
 });
 
 renderView.tommorowButton?.addEventListener("click", () => {
   weatherModel.currentDateMode = "tommorow";
   renderView.updateControlButtons(weatherModel.currentDateMode);
-  initApp();
+  updateWeatherView();
 });
 
 renderView.threeDaysButton?.addEventListener("click", () => {
   weatherModel.currentDateMode = "threeDay";
   renderView.updateControlButtons(weatherModel.currentDateMode);
-  initApp();
+  updateWeatherView();
 });

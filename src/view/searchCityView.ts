@@ -1,11 +1,12 @@
 import { safetyQuerySelector } from "@/util";
 
-export const searchCity = safetyQuerySelector<HTMLInputElement>(".hero__input");
+export const searchCityInput =
+  safetyQuerySelector<HTMLInputElement>(".hero__input");
 export const inputError =
   safetyQuerySelector<HTMLDivElement>(".hero__input-error");
 
-export function getCityNameInput() {
-  return searchCity.value.trim();
+export function getInputValue() {
+  return searchCityInput.value.trim();
 }
 
 export function showError() {
