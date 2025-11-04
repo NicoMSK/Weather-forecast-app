@@ -101,7 +101,7 @@ export class WeatherModel {
       hoursSort = forecast.forecastday[1].hour;
     }
 
-    const evenHours = hoursSort.filter((hour, index) => index % 2 === 0);
+    const evenHours = hoursSort.filter((_, index) => index % 2 === 0);
     const tempKeyDay = this.getTempKeyDayCurrent(this.unit);
 
     for (let i = 0; i < evenHours.length; i++) {

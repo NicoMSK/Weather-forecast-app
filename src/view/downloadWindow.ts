@@ -4,7 +4,7 @@ const loadingData = safetyQuerySelector<HTMLDialogElement>(".dialog");
 const textLoadingStatus = safetyQuerySelector<HTMLElement>(".dialog__text");
 const spinnerLoading = safetyQuerySelector<HTMLElement>(".dialog__loader");
 
-export async function showsDownloadWindow(promise: Promise<T>) {
+export async function showsDownloadWindow<T>(promise: Promise<T>) {
   const timeoutId = setTimeout(() => loadingData.showModal(), 150);
 
   try {

@@ -1,4 +1,3 @@
-import * as mock from "./mockData.json";
 import type { ForecastDayWeather } from "./weatherType";
 
 const HOST_URL = "https://api.weatherapi.com/v1";
@@ -18,11 +17,4 @@ export async function getWeatherFromAPI(location: string, days: number) {
     console.error(error);
     return null;
   }
-}
-
-export async function getWeatherFromMockApi(
-  location: string,
-  days: number
-): Promise<ForecastDayWeather> {
-  return mock;
 }
