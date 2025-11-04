@@ -1,5 +1,5 @@
 import * as weatherApi from "@/model/api/weather.api.ts";
-import * as weatherType from "@/model/api/type";
+import * as weatherType from "@/model/api/weatherType";
 import { getFormattedTime } from "@/util";
 
 export const DAY_OPT_BY_DATE_MODE = {
@@ -18,24 +18,14 @@ const TEMPERATURE_TYPE = {
 type TemperatureType = keyof typeof TEMPERATURE_TYPE;
 
 export class WeatherModel {
-  location: string = "Moscow";
-  days: number = 0;
   currentDateMode: WeatherDateMode = "today";
   unit: TemperatureType = "celcium";
   weatherData: weatherType.ForecastDayWeather | null = null;
 
-  setParametersLocation(location: string, days: number) {
-    this.location = location;
-    this.days = days;
-  }
-
-  async getWeather() {
+  async getWeather(cityName: string) {
     const daysOpt = DAY_OPT_BY_DATE_MODE[this.currentDateMode].days;
 
-    this.weatherData = await weatherApi.getWeatherFromAPI(
-      this.location,
-      daysOpt
-    );
+    this.weatherData = await weatherApi.getWeatherFromAPI(cityName, daysOpt);
 
     if (!this.weatherData) {
       throw new Error("weatherData не существует");

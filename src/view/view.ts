@@ -35,7 +35,7 @@ export function updateControlButtons(
   }
 }
 
-type WeatherDataDay = {
+export type WeatherDataDay = {
   location: string;
   localtime: string;
   temperature: number;
@@ -72,13 +72,14 @@ export class MainWeather {
 
   renderWeatherHero(
     weatherData: WeatherDataDay,
+    nameCity: string,
     dateCurrent: string,
     unitMeasurement: "℃" | "℉"
   ) {
     const heroContent = `
       <div class="hero__box">
         <div class="hero__location-box">
-          <p class="hero__location">${weatherData.location}</p>
+          <p class="hero__location">${nameCity}</p>
           <p class="hero__date">${dateCurrent}</p>
         </div>
         <div class="hero__temperature-box">

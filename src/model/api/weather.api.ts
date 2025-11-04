@@ -1,5 +1,5 @@
 import * as mock from "./mockData.json";
-import type { ForecastDayWeather } from "./type";
+import type { ForecastDayWeather } from "./weatherType";
 
 const HOST_URL = "https://api.weatherapi.com/v1";
 const API_KEY = "4a900778688045d887d103458252808";
