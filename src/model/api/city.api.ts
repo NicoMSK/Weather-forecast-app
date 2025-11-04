@@ -1,7 +1,7 @@
 import type { CityNames } from "./cityType";
 
 const API_KEY = "2c400ae7e35c5ee43924eddd40328031";
-const HOST_URL = "http://api.openweathermap.org/geo/1.0";
+const HOST_URL = "https://api.openweathermap.org/geo/1.0";
 
 export async function getCityFromApi(city: string) {
   try {

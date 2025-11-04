@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import createSvgSpritePlugin from "vite-plugin-svg-sprite";
 
 export default defineConfig({
+  base: "/Weather-forecast-app/",
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),

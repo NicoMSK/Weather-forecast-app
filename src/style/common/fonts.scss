@@ -6,26 +6,26 @@ $main-font: "Poppins", "Arial", sans-serif;
   "Poppins",
   300,
   normal,
-  url("/vite-weather/src/fonts/Poppins-Light.woff2") format("woff2")
+  url("@/fonts/Poppins-Light.woff2") format("woff2")
 );
 
 @include font-face(
   "Poppins",
   400,
   normal,
-  url("/vite-weather/src/fonts/Poppins-Regular.woff2") format("woff2")
+  url("@/fonts/Poppins-Regular.woff2") format("woff2")
 );
 
 @include font-face(
   "Poppins",
   500,
   normal,
-  url("/vite-weather/src/fonts/Poppins-Medium.woff2") format("woff2")
+  url("@/fonts/Poppins-Medium.woff2") format("woff2")
 );
 
 @include font-face(
   "Poppins",
   600,
   normal,
-  url("/vite-weather/src/fonts/Poppins-SemiBold.woff2") format("woff2")
+  url("@/fonts/Poppins-SemiBold.woff2") format("woff2")
 );

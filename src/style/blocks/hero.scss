@@ -3,6 +3,7 @@
 @use "../common/variables.scss" as *;
 
 $width-temperature-box: 400px;
+$mobile-width: 576px;
 
 .hero__container {
   margin-bottom: 4.375rem;
@@ -31,6 +32,12 @@ $width-temperature-box: 400px;
     background-image: url("../../icons/search_.svg");
     background-repeat: no-repeat;
   }
+
+  @media (max-width: $mobile-width) {
+    &::before {
+      top: 0;
+    }
+  }
 }
 
 .hero__input {
@@ -43,6 +50,10 @@ $width-temperature-box: 400px;
   border-radius: 25px;
   background: #d9d9d9;
   outline: none;
+
+  @media (max-width: $mobile-width) {
+    font-size: 20px;
+  }
 }
 
 .hero__input-error {
@@ -72,6 +83,11 @@ $width-temperature-box: 400px;
 .hero__box {
   margin-bottom: 3.125rem;
   display: flex;
+
+  @media (max-width: $mobile-width) {
+    margin-bottom: 10px;
+    flex-direction: column;
+  }
 }
 
 .hero__location-box {
@@ -96,6 +112,12 @@ $width-temperature-box: 400px;
     background-image: url("../../icons/location.svg");
     background-repeat: no-repeat;
   }
+
+  @media (max-width: $mobile-width) {
+    &::before {
+      right: 80px;
+    }
+  }
 }
 
 .hero__date {
@@ -109,6 +131,10 @@ $width-temperature-box: 400px;
   margin-inline: max(15px, (100% - $width-temperature-box) / 2);
   display: flex;
   gap: 0.625rem;
+
+  @media (max-width: $mobile-width) {
+    margin: auto;
+  }
 }
 
 .hero__temperature {
@@ -125,6 +151,10 @@ $width-temperature-box: 400px;
     top: -15px;
     background-image: url("../../icons/termometr.svg");
   }
+
+  @media (max-width: $mobile-width) {
+    font-size: 50px;
+  }
 }
 
 .hero__list {
@@ -132,6 +162,10 @@ $width-temperature-box: 400px;
   justify-content: space-around;
   flex-wrap: wrap;
   gap: 0.625rem;
+
+  @media (max-width: $mobile-width) {
+    gap: 5px;
+  }
 }
 
 .hero__item {
@@ -144,6 +178,10 @@ $width-temperature-box: 400px;
   font-size: 1.25rem;
   font-weight: 500;
   text-transform: uppercase;
+
+  @media (max-width: $mobile-width) {
+    font-size: 16px;
+  }
 }
 
 .hero__weather-parameter {
