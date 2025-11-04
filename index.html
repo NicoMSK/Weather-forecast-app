@@ -1,0 +1,125 @@
+<!doctype html>
+<html class="page" lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Прогноз погоды</title>
+  <script type="module" crossorigin src="/Weather-forecast-app/assets/index-Cxdhvsyu.js"></script>
+  <link rel="stylesheet" crossorigin href="/Weather-forecast-app/assets/index-DpA27vUA.css">
+</head>
+
+<body class="page__body">
+  <header class="header">
+    <div class="container">
+      <nav class="header__nav">
+        <div class="header__logo-box">
+          <h1 class="header__title">Погода</h1>
+          <p class="header__time">21:00</p>
+        </div>
+        <ul class="header__list">
+          <li class="header__item header__item--current" data-mode="today">
+            <button class="header__button header__button--current header__button--today" type="button">
+              Сегодня
+            </button>
+          </li>
+          <li class="header__item" data-mode="tommorow">
+            <button class="header__button header__button--tommorow" type="button">
+              Завтра
+            </button>
+          </li>
+          <li class="header__item" data-mode="threeDay">
+            <button class="header__button header__button--three-days" type="button">
+              3 дня
+            </button>
+          </li>
+        </ul>
+        <div class="header__toggle-wrapper">
+          <p class="header__temperature header__temperature--celsius">℃</p>
+          <button class="header__toggle" type="button">
+            <span class="visually-hidden">Сменить систему измерений температуры</span>
+          </button>
+          <p class="header__temperature header__temperature--faringate">℉</p>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <main class="page__main">
+    <section class="hero">
+      <div class="hero__container container">
+        <search class="hero__search">
+          <form class="hero__form" action="#" method="get">
+            <input class="hero__input" type="search" placeholder="Поиск локации...">
+            <span class="hero__input-error hero__input-error--hidden">Такого города не существует</span>
+          </form>
+        </search>
+        <div class="hero__weather-wrapper">
+          <div class="hero__box">
+            <div class="hero__location-box">
+              <p class="hero__location">Москва</p>
+              <p class="hero__date">--</p>
+            </div>
+            <div class="hero__temperature-box">
+              <p class="hero__temperature">--℃</p>
+              <img src="/Weather-forecast-app/assets/clouds-DRGNUKlM.svg" alt="Изображение облаков">
+            </div>
+          </div>
+          <ul class="hero__list">
+            <li class="hero__item">
+              <p class="hero__weather-data">Влажность</p>
+              <p class="hero__weather-parameter">
+                <span class="hero__humidity">--</span>
+                %
+              </p>
+            </li>
+            <li class="hero__item">
+              <p class="hero__weather-data">Видимость</p>
+              <p class="hero__weather-parameter">
+                <span class="hero__mileage">--</span>
+                км
+              </p>
+            </li>
+            <li class="hero__item">
+              <p class="hero__weather-data">Осадки</p>
+              <p class="hero__weather-parameter">
+                <span class="hero__pressure">--</span>
+                мм.
+              </p>
+            </li>
+            <li class="hero__item">
+              <p class="hero__weather-data">Ветер</p>
+              <p class="hero__weather-parameter">
+                <span class="hero__speed">--</span>
+                м/с
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <ul class="footer__list">
+      </ul>
+    </div>
+  </footer>
+
+  <dialog class="dialog">
+    <div class="dialog__loader">
+      <div class="dialog__loader-spinner"></div>
+    </div>
+    <p class="dialog__text"></p>
+  </dialog>
+
+  <template class="footer__template">
+    <li class="footer__item">
+      <p class="footer__time"></p>
+      <img class="footer__img" src="" alt="">
+      <p class="footer__temperature">&deg;C</p>
+    </li>
+  </template>
+</body>
+
+</html>
